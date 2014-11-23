@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{award['award_title']}}</h1>
+
+        <a type="button" class="btn btn-primary" href="">Share</a>
+        <a type="button" class="btn btn-info" href="">Tweet</a>
+{% if flag %}
+    <form style="float: left; margin-right: 5px" method="POST" action="/award/{{award['award_id']}}/flag/{{flag.key.id()}}/delete">
+        <input type="submit" class="btn btn-default" value="Unflag" />
+
+    </form>
+{% else %}
+    <form style="float: left; margin-right: 5px" method="POST" action="/award/{{award['award_id']}}/flag">
+        <input type="submit" class="btn btn-danger" value="Flag" />
+    </form>
+{% endif %}
+
+
+<br />
+<br />
+<table class="table table-striped">
+    {% for key,val in award.items() %}
+        {% if val != '' %}
+        {% if key not in ['modified_date', 'is_short_list', 'is_amp', '_full_text', 'previous_award_id', 'unspsc_code', 'line_item_id', 'award_id', 'awardee_id'] %}
+        <tr><td><i>{{key}}</i></td><td>{{val}}</td></tr>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+</table>
+
+
+{% if '_id' in bidinfo %}
+<h3>Bid Information</h3>
+
+<table class="table table-striped">
+    {% for key,val in bidinfo.items() %}
+        {% if val != '' %}
+        {% if key not in ['client_agency_org_id', '_id', 'procuring_entity_org_id', 'stage2_ref_id', 'org_id' , 'ref_no', 'ref_id', '_full_text'] %}
+        <tr><td><i>{{key}}</i></td><td>{{val}}</td></tr>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+
+</table>
+{% endif %}
+<br /><br /><br />
+
+{% endblock content %}

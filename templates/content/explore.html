@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <h1>Explore Procurement Data</h1>
+        <hr />
+        <ul>
+            <li><h3><a href="/content/yearly-awards">Quarterly Awards</a></h3></li>
+            <li><h3><a href="/content/organizations-by-region">Organizations By Region</a></h3></li>
+            <li><h3><a href="/content/yearly-breakdown">Distribution by Region by Supplier</a></h3></li>
+
+            <li><h3>More Dashboards coming soon...</h3></li>
+        </ul>
+
+        <br />
+        <br />
+        <br />
+
+        <hr />
+        <h3>Suggestions (What dashboards do you want to see?)</h3>
+        <form role="form" method="POST" action="/content/{{content_id}}/comment">
+            <div class="form-group">
+                <textarea type="text" class="form-control" id="comment" placeholder="Enter comment" name="comment"></textarea>
+            </div>
+            <input type="submit" value="Submit" type="button" class="btn btn-primary btn-block">
+        </form>
+        <br />
+
+        {% if comments.get() %}
+        <p style="font-size: 18px; text-decoration: underline">Other's Suggestions</p>
+        {% endif %}
+
+        {% for comment in comments %}
+            <blockquote>
+                <b style="font-size:14px; margin-top: 3px;">{{comment.nickname}}:</b>
+                <br />
+                {{comment.comment}}
+            </blockquote>
+        {% endfor %}
+           <br /><br />
+
+
+{% endblock content %}

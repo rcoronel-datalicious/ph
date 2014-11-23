@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Awarded Line Items</h1>
+        <hr />
+<table class="table table-striped">
+
+{% for award in awards %}
+        <tr>
+            <td>
+                <a href="/award/{{award['award_id']}}">
+                <h4 style="font-weight: 200">
+
+                    {{award['award_title']}}
+                        <br style="line-height: 2px" />
+                        <br style="line-height: 2px" />
+
+                    {{award['awardee']}}
+
+                </h4>
+                </a>
+
+            </td>
+
+            <td>
+                <h3 style="font-weight: 200">{{award['contract_amt']}}</h3>
+
+            </td>
+
+        </tr>
+
+
+
+
+{% endfor %}
+
+</table>
+
+        <div class="col-md-6">
+            {% if page > 1 %}
+                <a href="/award?page={{page-1}}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Prev</a>
+            {% endif %}
+
+        </div>
+        <div class="col-md-6">
+            <p style="float: right">
+            <a href="/award?page={{page+1}}" class="btn btn-primary">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            </p>
+        </div>
+{% endblock content %}

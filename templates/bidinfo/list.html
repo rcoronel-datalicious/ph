@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Projects</h1>
+<hr />
+
+<table class="table table-striped">
+
+{% for bidinfo in bidinfos %}
+        <tr><a href="/bidinfo/{{bidinfo['ref_id']}}" style="display: block">
+            <td>
+
+                <a href="/bidinfo/{{bidinfo['ref_id']}}" style="display: block">
+                    <h4 style="font-weight: 200">
+
+                    {{bidinfo['tender_title'] }}
+                        <br style="line-height: 2px" />
+                        <br style="line-height: 2px" />
+
+                        {{bidinfo['procuring_entity_org'] }}
+                    </h4>
+
+                </a>
+
+            </td>
+            <td>
+
+                <h3 style="font-weight: 200">
+                    {{ bidinfo['approved_budget']}}
+                </h3>
+            </td>
+
+        </a></tr>
+
+{% endfor %}
+
+</table>
+
+        <div class="col-md-6">
+            {% if page > 1 %}
+                <a href="/bidinfo?page={{page-1}}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Prev</a>
+            {% endif %}
+
+        </div>
+        <div class="col-md-6">
+            <p style="float: right">
+            <a href="/bidinfo?page={{page+1}}" class="btn btn-primary">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            </p>
+        </div>
+
+{% endblock content %}

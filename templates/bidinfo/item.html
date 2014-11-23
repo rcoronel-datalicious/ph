@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{bidinfo['tender_title']}}</h1>
+        <a target="_blank" type="button" class="btn btn-primary" href="https://www.facebook.com/sharer.php?u=http://procurementhack.appspot.com/bidinfo/{{bidinfo['ref_id']}}">Share</a>
+        <a target="_blank" class="btn btn-info" href="http://twitter.com/intent/tweet?source=procurementhack.appspot.com&amp;text=Looking for bidders for this project &amp;url=http://procurementhack.appspot.com/bidinfo/{{bidinfo['ref_id']}}">Tweet</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#emailModal">
+            Email
+        </button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#bidModal">
+            Bid
+        </button>
+
+
+<br />
+<br />
+
+<table class="table table-striped">
+    {% for key,val in bidinfo.items() %}
+        {% if val != '' %}
+        {% if key not in ['client_agency_org_id', '_id', 'procuring_entity_org_id', 'stage2_ref_id', 'org_id' , 'ref_no', 'ref_id', '_full_text'] %}
+        <tr><td><i>{{key}}</i></td><td>{{val}}</td></tr>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+</table>
+
+<h3>Organization</h3>
+
+<table class="table table-striped">
+    {% for key,val in org.items() %}
+        {% if val != '' %}
+        {% if key not in ['a', '_full_text', 'org_id', 'member_type_id', '_id', 'parent_org_id', 'is_org_foreign'] %}
+        <tr><td><i>{{key}}</i></td><td>{{val}}</td></tr>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+</table>
+
+
+<h3>Line Items</h3>
+<table class="table table-striped">
+
+{% for lineitem in lineitems %}
+    <a href="/bidinfo/{{bidinfo['ref_id']}}/{{lineitem['line_item_id']}}">
+        <tr><td>{{lineitem['item_name']}}</td></tr>
+    </a>
+    {{ lineitem }}
+{% endfor %}
+</table>
+
+
+
+<script>
+function showEmailForm() {
+
+}
+
+</script>
+
+
+<div class="modal fade" id="emailModal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Email</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" method="post" action="/email" id="emailForm">
+            <input type="hidden" name="redirect_url" value="/bidinfo/{{bidinfo['ref_id']}}?action=email.success" />
+            <input type="hidden" name="id" value="{{bidinfo['ref_id']}}" />
+            <div class="form-group">
+                <input type="text" class="form-control" id="to" placeholder="Email address" name="to"></textarea>
+            </div>
+            <div class="form-group">
+                <textarea type="text" class="form-control" id="message" placeholder="Enter message" name="message" rows="5"></textarea>
+            </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick='document.getElementById("emailForm").submit(); return false;'>Send Message</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="bidModal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Submit a Bid</h4>
+      </div>
+      <div class="modal-body">
+        <p style="text-align: center">All bids are handled by PhilGEPS. Click the logo to visit their website
+        <a target="_blank" href="http://philgeps.gov.ph"><img style="text-align: center" src="http://www.lnu.edu.ph/itb/philgeps.jpg" height="150" /></a>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a type="button" class="btn btn-primary" href="http://philgeps.gov.ph">Go to PhilGEPS Website</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+{% endblock content %}
